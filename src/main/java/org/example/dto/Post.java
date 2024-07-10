@@ -1,6 +1,6 @@
-package org.example;
+package org.example.dto;
 
-public class PostsDto {
+public class Post {
     private int UserId;
     private int id;
 
@@ -38,7 +38,7 @@ public class PostsDto {
 
     private String title;
 
-    public PostsDto(int userId, int id, String title, String body) {
+    public Post(int userId, int id, String title, String body) {
         UserId = userId;
         this.id = id;
         this.title = title;

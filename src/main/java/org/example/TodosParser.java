@@ -2,12 +2,12 @@ package org.example;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import org.example.dto.Todo;
 import org.jsoup.Jsoup;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.List;
-import java.util.Optional;
 
 public class TodosParser {
     public void taskTracker(int userid) {
@@ -22,12 +22,12 @@ public class TodosParser {
             throw new RuntimeException(e);
         }
 
-        Type type = TypeToken.getParameterized(List.class, TodosDto.class).getType();
+        Type type = TypeToken.getParameterized(List.class, Todo.class).getType();
         Gson gson = new Gson();
 
-        List<TodosDto> todosDtoList = gson.fromJson(doc, type);
+        List<Todo> todoList = gson.fromJson(doc, type);
         StringBuilder tasks = new StringBuilder("");
-                todosDtoList.forEach(todo-> {
+                todoList.forEach(todo-> {
             if (!todo.getCompleted()){
                 tasks.append(todo.getTitle()).append("\n");
             }

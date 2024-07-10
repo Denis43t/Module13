@@ -1,11 +1,11 @@
-package org.example;
+package org.example.dto;
 
-public class CommentDto {
+public class Comment {
     private int postId;
     private int id;
     private String name;
 
-    public CommentDto(int postId, int id, String name, String email, String body) {
+    public Comment(int postId, int id, String name, String email, String body) {
         this.postId = postId;
         this.id = id;
         this.name = name;

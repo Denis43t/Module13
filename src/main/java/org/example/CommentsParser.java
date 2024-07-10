@@ -3,16 +3,16 @@ package org.example;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import org.example.dto.Comment;
+import org.example.dto.Post;
 import org.jsoup.Jsoup;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 
 public class CommentsParser {
@@ -30,11 +30,11 @@ public class CommentsParser {
             throw new RuntimeException(e);
         }
 
-        Type type = TypeToken.getParameterized(List.class, PostsDto.class).getType();
+        Type type = TypeToken.getParameterized(List.class, Post.class).getType();
         Gson gson = new Gson();
 
-        List<PostsDto> postsDtoList = gson.fromJson(doc, type);
-        id = postsDtoList.stream().map(PostsDto::getId).max(Integer::compareTo);
+        List<Post> postList = gson.fromJson(doc, type);
+        id = postList.stream().map(Post::getId).max(Integer::compareTo);
 
         return id;
     }
@@ -61,13 +61,13 @@ public class CommentsParser {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        Type type = TypeToken.getParameterized(List.class, CommentDto.class).getType();
+        Type type = TypeToken.getParameterized(List.class, Comment.class).getType();
         Gson gson = new Gson();
-        List<CommentDto> commentDtoList = gson.fromJson(doc, type);
+        List<Comment> commentList = gson.fromJson(doc, type);
 
         List<String> comments =
-                commentDtoList.stream()
-                .map(CommentDto::getBody)
+                commentList.stream()
+                .map(Comment::getBody)
                         .toList();
         comments.forEach(System.out::println);
 
@@ -76,20 +76,9 @@ public class CommentsParser {
 
     private void commentLoger(int postId, int userId, List<String> comments){
         File file=new File("user-"+userId+"-post-"+postId+"-comments.json");
-//        try (FileWriter writer = new FileWriter(file))
-//        {
-//            comments.forEach(comment-> {
-//                try {
-//                    writer.write(comment);
-//                } catch (IOException e) {
-//                    throw new RuntimeException(e);
-//                }
-//            });
-//            writer.flush();
-//        } catch (IOException e) {
-//            System.out.println(e.getMessage());
-//        }
+
         Type listType = new TypeToken<List<String>>() {}.getType();
+
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String json=gson.toJson(comments,listType);
         try (FileWriter writer = new FileWriter(file))
@@ -99,5 +88,6 @@ public class CommentsParser {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
+
     }
 }
