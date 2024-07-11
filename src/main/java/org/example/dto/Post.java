@@ -46,4 +46,14 @@ public class Post {
     }
 
     private String body;
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "UserId=" + UserId +
+                ", id=" + id +
+                ", title='" + title + '\'' +
+                ", body='" + body + '\'' +
+                '}';
+    }
 }

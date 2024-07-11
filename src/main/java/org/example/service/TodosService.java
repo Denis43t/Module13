@@ -1,17 +1,21 @@
-package org.example;
+package org.example.service;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import org.example.dto.Todo;
+import org.example.utils.JsonUtils;
 import org.jsoup.Jsoup;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.List;
 
-public class TodosParser {
+import static org.example.properties.Constans.BASE_URL;
+
+public class TodosService {
+    JsonUtils jsonUtils=new JsonUtils();
     public void taskTracker(int userid) {
-        final String uri = "https://jsonplaceholder.typicode.com/users/" + userid + "/todos";
+        final String uri = BASE_URL + "/users/" + userid + "/todos";
         String doc = null;
         try {
             doc = Jsoup.connect(uri)
@@ -22,13 +26,11 @@ public class TodosParser {
             throw new RuntimeException(e);
         }
 
-        Type type = TypeToken.getParameterized(List.class, Todo.class).getType();
-        Gson gson = new Gson();
+        List<Todo> todoList=jsonUtils.fromJsonConvertorToList(Todo.class,doc);
 
-        List<Todo> todoList = gson.fromJson(doc, type);
         StringBuilder tasks = new StringBuilder("");
-                todoList.forEach(todo-> {
-            if (!todo.getCompleted()){
+        todoList.forEach(todo -> {
+            if (!todo.getCompleted()) {
                 tasks.append(todo.getTitle()).append("\n");
             }
         });

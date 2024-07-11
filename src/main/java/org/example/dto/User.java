@@ -89,6 +89,25 @@ public class User {
             public void setLat(double lat) {
                 this.lat = lat;
             }
+
+            @Override
+            public String toString() {
+                return "Geo{" +
+                        "lat=" + lat +
+                        ", lng=" + lng +
+                        '}';
+            }
+        }
+
+        @Override
+        public String toString() {
+            return "Adress{" +
+                    "street='" + street + '\'' +
+                    ", suite='" + suite + '\'' +
+                    ", city='" + city + '\'' +
+                    ", zipcode='" + zipcode + '\'' +
+                    ", geo=" + geo +
+                    '}';
         }
     }
 
@@ -125,6 +144,15 @@ public class User {
 
         public void setBs(String bs) {
             this.bs = bs;
+        }
+
+        @Override
+        public String toString() {
+            return "Company{" +
+                    "name='" + name + '\'' +
+                    ", catchPhrase='" + catchPhrase + '\'' +
+                    ", bs='" + bs + '\'' +
+                    '}';
         }
     }
 
@@ -204,5 +232,19 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", adress=" + adress +
+                ", phone='" + phone + '\'' +
+                ", website='" + website + '\'' +
+                ", company=" + company +
+                '}';
     }
 }

@@ -44,4 +44,14 @@ public class Todo {
     public void setCompleted(Boolean completed) {
         this.completed = completed;
     }
+
+    @Override
+    public String toString() {
+        return "Todo{" +
+                "userId=" + userId +
+                ", id=" + id +
+                ", title='" + title + '\'' +
+                ", completed=" + completed +
+                '}';
+    }
 }
